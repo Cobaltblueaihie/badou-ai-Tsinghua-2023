@@ -1,0 +1,39 @@
+from skimage.color import rgb2gray
+import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+
+# 灰度化手工
+img = cv2.imread("lenna.png")#读取图片
+h, w = img.shape[:2]  # 获取图片长宽
+img_gray = np.zeros([h, w], img.dtype)  # 创建一张一样大小的单通道图片
+for i in range(h):
+    for j in range(w):
+        m = img[i, j]  # 取出BGR坐标
+        img_gray[i, j] =  img_gray [i,j] = int (m [ 0] *0.11 + m [ 1] *0.59 + m [ 2] *0.3) # 将BGR坐标转化为gray坐标并赋值给新图像
+print(img_gray)#打印新的图像
+print("image show gray: %s" % img_gray)
+cv2.imshow("image show gray", img_gray)
+
+plt.subplot(221)#表示将整个图像窗口分为2行2列, 当前位置为1
+img = plt.imread("lenna.png")
+plt.imshow(img)#可视化展示图片
+print("image lenna")
+print(img)
+
+# 灰度化调用
+img_gray = rgb2gray(img)# 调用
+plt.subplot(222)
+plt.imshow(img_gray, cmap='gray')
+print("image gray")
+print(img_gray)
+
+# 二值化调用
+img_binary = np.where(img_gray >= 0.5, 1, 0)
+print("image_binary")
+print(img_binary)
+print(img_binary.shape)
+
+plt.subplot(223)
+plt.imshow(img_binary, cmap='gray')
+plt.show()
